@@ -173,11 +173,11 @@ public class StatsThread extends Thread {
 
         theCanvas.drawLine(axisOffSet, canvasHeight - axisOffSet,
                 axisOffSet, axisOffSet,
-                pStats); // Vertical Axes
+                pStats); // Vertical Axis
 
         theCanvas.drawLine(axisOffSet, canvasHeight - axisOffSet,
                 canvasWidth - axisOffSet, canvasHeight - axisOffSet,
-                pStats); // Horizontal Axes
+                pStats); // Horizontal Axis
     }
 
     public void drawBars(Canvas theCanvas) {
