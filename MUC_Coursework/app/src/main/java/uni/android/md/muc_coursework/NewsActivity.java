@@ -36,7 +36,7 @@ public class NewsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_news);
 
 
-        lvNews = (ListView)findViewById(R.id.lvNews);
+        lvNews = (ListView) findViewById(R.id.lvNews);
 
         //Load pref, rss feed to read
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -77,18 +77,10 @@ public class NewsActivity extends ActionBarActivity {
     }
 
 
-
-
-
-
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        //  getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -106,3 +98,5 @@ public class NewsActivity extends ActionBarActivity {
 
 
 }
+
+

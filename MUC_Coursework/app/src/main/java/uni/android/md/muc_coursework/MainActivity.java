@@ -27,10 +27,10 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
     //Icon buttons
-    Button btnNews;
-    Button btnStats;
-    Button btnLibrary;
-    Button btnMap;
+    ImageButton btnNews;
+    ImageButton btnStats;
+    ImageButton btnLibrary;
+    ImageButton btnMap;
 
     //Reading library controls
     Button btnUpdate;
@@ -55,20 +55,20 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         //Load default preferences, defined in preference menu layout file into shared preferences
-        PreferenceManager.setDefaultValues(this, R.xml.preferences,false);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         //SharedPreferences b = PreferenceManager.getDefaultSharedPreferences(this);
         //String bRSSFeedURL = b.getString("PREF_LIST", "default choice");
         //String cRSSFeedURL = b.getString("PREF_LIST", "default choice");
 
 
         //Icon buttons
-        btnNews = (Button) findViewById(R.id.btnNews);
+        btnNews = (ImageButton) findViewById(R.id.btnNews);
         btnNews.setOnClickListener(this);
-        btnStats = (Button) findViewById(R.id.btnStats);
+        btnStats = (ImageButton) findViewById(R.id.btnStats);
         btnStats.setOnClickListener(this);
-        btnLibrary = (Button) findViewById(R.id.btnLibrary);
+        btnLibrary = (ImageButton) findViewById(R.id.btnLibrary);
         btnLibrary.setOnClickListener(this);
-        btnMap = (Button) findViewById(R.id.btnMap);
+        btnMap = (ImageButton) findViewById(R.id.btnMap);
         btnMap.setOnClickListener(this);
 
         //Commit buttons
@@ -87,8 +87,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         txtCurrentlyReading = (TextView) findViewById(R.id.txtCurrentlyReading);
 
         //Current page objects
-        pageSeekBar = (SeekBar)findViewById(R.id.pageSeekBar);
-        tvPageNo = (TextView)findViewById(R.id.txtPageNo);
+        pageSeekBar = (SeekBar) findViewById(R.id.pageSeekBar);
+        tvPageNo = (TextView) findViewById(R.id.txtPageNo);
 
 
         //Attach listener to seek bar
@@ -102,9 +102,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar){}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
 
 
@@ -133,9 +136,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         displayCurrentlyReading();
 
 
-
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        currentlyReading = userLibrary.getReading();
+        displayCurrentlyReading();
+    }
     //Update screen component to reflect currently selected book
     public void displayCurrentlyReading() {
         txtCurrentlyReading.setText(currentlyReading[bookId].getTitle());
@@ -251,15 +259,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
 
     }
-    private void createCommit(){
+
+    private void createCommit() {
 //function that constructs new commit object that is sent for entry to the database
 
         //Calculate pages read
         int current_page = currentlyReading[bookId].getCurrentPage();
-        int pages_read =  pageSeekBar.getProgress() - current_page;
+        int pages_read = pageSeekBar.getProgress() - current_page;
 
         //If pages read a positive value
-        if (pages_read > 0){
+        if (pages_read > 0) {
 
             //Create new commit
             Date date = new Date();
@@ -279,9 +288,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             b = currentlyReading[bookId];
 
 //display progress to user
-            Toast.makeText(this, "New current page: " + b.getCurrentPage() , Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "New current page: " + b.getCurrentPage(), Toast.LENGTH_SHORT).show();
 
-        }else{
+        } else {
 //display error to user
             Toast.makeText(this, "Commit not made( negative value )", Toast.LENGTH_SHORT).show();
         }
@@ -294,15 +303,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     }
 
-    private void finishBook(){
+    private void finishBook() {
         //Same as update book, added info send to book database
 
         //Calculate pages read
         int current_page = currentlyReading[bookId].getCurrentPage();
-        int pages_read =  currentlyReading[bookId].getNumberOfPages() - current_page;
+        int pages_read = currentlyReading[bookId].getNumberOfPages() - current_page;
 
         //If pages read a positive value
-        if (pages_read > 0){
+        if (pages_read > 0) {
 
             //Create new commit
             Date date = new Date();
@@ -324,14 +333,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             b = currentlyReading[bookId];
 
 
-            Toast.makeText(this, "Back on shelf" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Back on shelf", Toast.LENGTH_SHORT).show();
 
-        }else{
+        } else {
 
             Toast.makeText(this, "Commit not made( negative value )", Toast.LENGTH_SHORT).show();
         }
 
     }
+
     protected void showAbout() {
         // Inflate the about message contents
         View messageView = getLayoutInflater().inflate(R.layout.dialog_about, null, false);
@@ -345,7 +355,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         //Build dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.drawable.abc_ic_search); //set box icon
-        builder.setTitle(R.string.app_name);	//set title
+        builder.setTitle(R.string.app_name);    //set title
         builder.setView(messageView);
         builder.create();
         builder.show();
